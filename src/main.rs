@@ -9,7 +9,9 @@ fn main() {
         println!("The first argument is the file name/path");
         println!("The second argument is the pattern that you want to find in the file");
         println!("");
-        println!("Example: thegrep example.txt pattern");
+        println!("Example: thegrep example1.txt pattern");
+        println!("You can check lines above and bellow using -A and -B");
+        println!("Example: thegrep example1.txt pattern -A 10 -B 5A");
     } else {
         grep_document(&args);
     }
@@ -29,14 +31,12 @@ fn grep_document(args: &Vec<String>) {
 
         if line.contains(&args[2]) {
             if let Some(index) = args.iter().position(|pos| pos == "-B") {
-                if let Ok(n) = args[index + 1].parse::<usize>() {
-                    for i in (1..n).rev() {
-                        let new_index = (n_line - i) - 1;
-                        if (n_line - i) == 0 {
-                            break;
+                if let Ok(n) = args[index + 1].parse::<isize>() {
+                    for i in (1..n + 1).rev() {
+                        if n_line as isize - i < 1 {
+                            continue;
                         }
-                        println!("{}", new_index);
-                        println!("{}", document_by_lines[new_index]);
+                        println!("{}", document_by_lines[n_line - i as usize as usize - 1])
                     }
                 }
             }
