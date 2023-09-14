@@ -1,3 +1,4 @@
+use colored::Colorize;
 use std::env;
 use std::fs;
 
@@ -8,7 +9,7 @@ fn main() {
         println!(" - USAGE - ");
         println!("The first argument is the file name/path");
         println!("The second argument is the pattern that you want to find in the file");
-        println!("");
+        println!(" ");
         println!("Example: thegrep example1.txt pattern");
         println!("You can check lines above and bellow using -A and -B");
         println!("Example: thegrep example1.txt pattern -A 10 -B 5A");
@@ -27,7 +28,7 @@ fn grep_document(args: &Vec<String>) {
     }
 
     for line in &document_by_lines {
-        n_line = n_line + 1;
+        n_line += 1;
 
         if line.contains(&args[2]) {
             if let Some(index) = args.iter().position(|pos| pos == "-B") {
@@ -36,12 +37,12 @@ fn grep_document(args: &Vec<String>) {
                         if n_line as isize - i < 1 {
                             continue;
                         }
-                        println!("{}", document_by_lines[n_line - i as usize as usize - 1])
+                        println!("{}", document_by_lines[n_line - i as usize - 1])
                     }
                 }
             }
 
-            println!("{}", line);
+            println!("{}", line.red());
 
             if let Some(index) = args.iter().position(|pos| pos == "-A") {
                 if let Ok(n) = args[index + 1].parse::<usize>() {
