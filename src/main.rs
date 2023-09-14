@@ -18,7 +18,7 @@ fn main() {
     }
 }
 
-fn grep_document(args: &Vec<String>) {
+fn grep_document(args: &[String]) {
     let mut n_line: usize = 0;
     let document = fs::read_to_string(&args[1]).unwrap();
     let mut document_by_lines: Vec<&str> = vec![];
